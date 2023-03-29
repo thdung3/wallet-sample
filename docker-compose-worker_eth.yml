@@ -1,0 +1,45 @@
+version: "3"
+services:
+  wallet:
+    build: .
+    # depends_on:
+    #   - mongodb
+    environment:
+      MONGODB_URI: mongodb://192.168.64.1:27017/wallet
+      BACKEND_URL: http://localhost:3000
+      DEPOSIT_PATH: /api/fund/deposit
+      WITHDRAW_CONFIRM_PATH: /api/fund/confirm_withdraw
+      GRAYLOG_HOST: 95.217.75.190
+      GRAYLOG_PORT: 12203
+      DEBUG: wallet:*
+      SERVER_SECRET: secret
+      NODE_ENV: development
+      SERVICE_NAMES: eth
+      SERVICE_TYPE: worker
+      PORT: 3001
+      SERVICE_SLEEP_TIME: 10000
+      SERVICE_TOKEN: nTdy2Itj.A8hlOcuEdVS
+
+      # ETH configs
+      ETH_NODE_URL: wss://mainnet.infura.io/ws/v3/7a084d9985a34b9c90a3c3ebcd9f019d
+      ETH_SLEEP_TIME: 10
+      ETH_MINIMUM_MOVE_FUND: 0.02
+      ETH_MAXIMUM_GAS_PRICE_MOVE_FUND: 200
+      ETH_START_BLOCK_HEIGHT: 11052385
+      ETH_MINIMUM_CONFIRMATIONS: 2 # default 12
+      ETH_GAS_LIMIT: 21000
+      ETH_BASE_FEE: 0
+
+    command: npm run inspect
+  # mongodb:
+  #   image: mongo
+  #   restart: always
+  #   ports:
+  #     - "27018:27017"
+  #   volumes:
+  #     - mongodata2:/data/db
+  #   command: mongod --auth
+networks:
+  default:
+    external:
+      name: wallet

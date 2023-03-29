@@ -1,0 +1,33 @@
+version: "3"
+services:
+  wallet:
+    build: .
+    network_mode: "host"
+    environment:
+      MONGODB_URI: mongodb://192.168.65.2:27017/wallet
+      BACKEND_URL: http://localhost:3000
+      DEPOSIT_PATH: /api/fund/deposit
+      WITHDRAW_CONFIRM_PATH: /api/fund/confirm_withdraw
+      GRAYLOG_HOST: 95.217.75.190
+      GRAYLOG_PORT: 12203
+      DEBUG: wallet:*
+      SERVER_SECRET: secret
+      NODE_ENV: development
+      SERVICE_NAMES: xrp
+      SERVICE_TYPE: worker
+      SERVICE_SLEEP_TIME: 10000
+      SERVICE_TOKEN: nTdy2Itj.A8hlOcuEdVS
+
+      # XRP_NODE_URL: http://s2.ripple.com:51234
+      # XRP_NODE_V2_URL: https://data.ripple.com
+      XRP_API_URL: wss://s1.ripple.com
+      XRP_SLEEP_TIME: 30
+      XRP_START_BLOCK_HEIGHT: 63000000
+      XRP_MINIMUM_CONFIRMATIONS: 10
+      XRP_TIMEOUT: 10000
+
+    command: npm run inspect
+networks:
+  default:
+    external:
+      name: wallet

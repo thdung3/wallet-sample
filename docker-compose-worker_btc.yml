@@ -1,0 +1,31 @@
+version: "3"
+services:
+  wallet:
+    build: .
+    network_mode: "host"
+    environment:
+      MONGODB_URI: mongodb://192.168.65.2:27017/wallet
+      BACKEND_URL: http://localhost:3000
+      DEPOSIT_PATH: /api/fund/notify
+      WITHDRAW_CONFIRM_PATH: /api/fund/confirm_withdraw
+      GRAYLOG_HOST: 95.217.75.190
+      GRAYLOG_PORT: 12203
+      DEBUG: wallet:*
+      SERVER_SECRET: secret
+      NODE_ENV: development
+      SERVICE_NAMES: btc
+      SERVICE_TYPE: worker
+      SERVICE_SLEEP_TIME: 10000
+      SERVICE_TOKEN: nTdy2Itj.A8hlOcuEdVS
+
+      BTC_NODE_URL: http://wallet:secret@95.217.201.184:8332
+      BTC_MAXIMUM_FEE: 30000 #satoshi
+      BTC_MINIMUM_CONFIRMATION: 6
+      BTC_SLEEP_TIME: 10
+      BTC_START_BLOCK_HEIGHT: 662440
+
+    command: npm run inspect
+networks:
+  default:
+    external:
+      name: wallet

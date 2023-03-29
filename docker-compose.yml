@@ -1,0 +1,52 @@
+version: "3"
+services:
+  wallet:
+    build: .
+    # network_mode: "host"
+    ports:
+      - 3001:3001
+      - 9229:9229
+    environment:
+      MONGODB_URI: mongodb://wallet:secret@192.168.65.2:27017/wallet
+      BACKEND_URL: http://localhost:3000
+      DEPOSIT_PATH: /api/fund/deposit
+      GRAYLOG_HOST: 95.217.75.190
+      GRAYLOG_PORT: 12203
+      WITHDRAW_CONFIRM_PATH: /api/fund/confirm_withdraw
+      DEBUG: wallet:*
+      SERVER_SECRET: secret
+      NODE_ENV: development
+      SERVICE_NAMES: eth,btc,xrp
+      SERVICE_TYPE: server
+      PORT: 3001
+      SERVICE_SLEEP_TIME: 10000
+      SERVICE_TOKEN: nTdy2Itj.A8hlOcuEdVS
+
+      ETH_NODE_URL: wss://mainnet.infura.io/ws/v3/7a084d9985a34b9c90a3c3ebcd9f019d
+      ETH_SLEEP_TIME: 10
+      ETH_MINIMUM_MOVE_FUND: 0.02
+      ETH_MAXIMUM_GAS_PRICE_MOVE_FUND: 200 #Gwei
+      ETH_MINIMUM_CONFIRMATION: 2 # default 12
+      ETH_GAS_LIMIT: 21000
+      ETH_BASE_FEE: 0
+
+      BTC_NODE_URL: http://wallet:secret@95.217.201.184:8332
+      BTC_MAXIMUM_FEE: 30000 #satoshi
+      BTC_MINIMUM_CONFIRMATION: 6
+      BTC_SLEEP_TIME: 10
+
+      XRP_NODE_URL: http://s2.ripple.com:51234
+      XRP_NODE_V2_URL: https://data.ripple.com
+      XRP_API_URL: wss://s1.ripple.com
+      XRP_SLEEP_TIME: 10
+      XRP_START_BLOCK_HEIGHT: 63000000
+      XRP_MINIMUM_CONFIRMATIONS: 10
+      XRP_ITEM_PER_PAGE: 1000
+      XRP_TIMEOUT: 10000
+
+    command: npm run inspect
+
+networks:
+  default:
+    external:
+      name: wallet
